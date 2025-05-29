@@ -1,0 +1,286 @@
+# TodoList App - Requirements Chi Tiết
+
+## 1. Tổng quan dự án
+- **Tên ứng dụng**: TodoList Web Application
+- **Mục đích**: Quản lý công việc cá nhân với giao diện web hiện đại
+- **Công nghệ**: React.js + Node.js/Express + MongoDB/PostgreSQL
+- **Target users**: Người dùng cá nhân cần quản lý task hàng ngày
+
+## 2. Functional Requirements
+
+### 2.1 Quản lý Tasks
+- **Tạo task mới**:
+  - Input field để nhập tên task
+  - Textarea cho mô tả chi tiết (optional)
+  - Dropdown chọn độ ưu tiên (High, Medium, Low)
+  - Date picker để set deadline
+  - Category/Tag selection
+  - Button "Add Task"
+
+- **Hiển thị danh sách tasks**:
+  - List view với checkbox để mark complete
+  - Hiển thị: tên task, deadline, priority, category
+  - Color coding theo priority level
+  - Badge hiển thị status (Pending, In Progress, Completed, Overdue)
+
+- **Chỉnh sửa tasks**:
+  - Click vào task để edit inline hoặc modal popup
+  - Có thể thay đổi tất cả thông tin của task
+  - Auto-save hoặc Save/Cancel buttons
+
+- **Xóa tasks**:
+  - Delete button với confirmation dialog
+  - Bulk delete cho multiple selection
+  - Soft delete với trash/restore functionality
+
+### 2.2 Filtering & Sorting
+- **Filter options**:
+  - All tasks / Active / Completed
+  - By priority (High, Medium, Low)
+  - By category/tags
+  - By date range
+  - Overdue tasks
+  - Today's tasks
+
+- **Sort options**:
+  - By creation date (newest/oldest)
+  - By deadline (soonest/latest)
+  - By priority
+  - Alphabetical
+  - Custom drag-and-drop ordering
+
+### 2.3 Search Functionality
+- Real-time search box
+- Search trong tên task và description
+- Highlight matching text trong results
+- Clear search button
+
+### 2.4 Categories/Tags Management
+- Tạo, sửa, xóa categories
+- Color picker cho mỗi category
+- Assign multiple tags cho 1 task
+- Filter by categories
+
+## 3. User Interface Requirements
+
+### 3.1 Layout Structure
+- **Header**:
+  - App title/logo
+  - User menu (nếu có auth)
+  - Theme toggle (dark/light mode)
+  - Search bar
+
+- **Sidebar** (optional):
+  - Quick filters
+  - Categories list
+  - Statistics summary
+
+- **Main Content Area**:
+  - Add task form (có thể collapse/expand)
+  - Tasks list với pagination hoặc infinite scroll
+  - Empty state khi không có tasks
+
+- **Footer**:
+  - Copyright info
+  - Links to help/about
+
+### 3.2 Responsive Design
+- Mobile-first approach
+- Breakpoints: 320px, 768px, 1024px, 1440px
+- Touch-friendly buttons (min 44px)  
+- Collapsible sidebar trên mobile
+- Swipe gestures for mobile actions
+
+### 3.3 UI Components Cần Thiết
+- Input fields với validation styling
+- Buttons (primary, secondary, danger)
+- Checkboxes và radio buttons
+- Dropdown menus
+- Date pickers
+- Modal dialogs
+- Toast notifications
+- Loading spinners
+- Progress bars
+- Tooltips
+
+## 4. Technical Requirements
+
+### 4.1 Frontend (React.js)
+- **Core Libraries**:
+  - React 18+ với Hooks
+  - React Router DOM cho routing
+  - Styled-components hoặc Tailwind CSS
+  - React Query hoặc SWR cho data fetching
+  - React Hook Form cho form handling
+  - React DnD cho drag and drop
+
+- **State Management**:
+  - Context API hoặc Zustand/Redux Toolkit
+  - Local storage cho user preferences
+
+- **Performance**:
+  - Code splitting với React.lazy
+  - Memoization với useMemo/useCallback
+  - Virtual scrolling cho large lists
+
+### 4.2 Backend (Node.js/Express)
+- **API Structure**:
+  - RESTful API design
+  - Routes: /api/tasks, /api/categories, /api/users
+  - HTTP methods: GET, POST, PUT, DELETE
+  - Request/Response validation với Joi hoặc Yup
+
+- **Database Schema**:
+  ```
+  Tasks Table:
+  - id (UUID/ObjectId)
+  - title (string, required)
+  - description (text, optional)
+  - priority (enum: high, medium, low)
+  - status (enum: pending, in_progress, completed)
+  - deadline (datetime)
+  - category_id (foreign key)
+  - created_at (timestamp)
+  - updated_at (timestamp)
+  
+  Categories Table:
+  - id (UUID/ObjectId) 
+  - name (string, unique)
+  - color (string, hex code)
+  - created_at (timestamp)
+  ```
+
+- **API Endpoints**:
+  ```
+  GET /api/tasks - Lấy danh sách tasks (với query params cho filter/sort)
+  POST /api/tasks - Tạo task mới
+  PUT /api/tasks/:id - Update task
+  DELETE /api/tasks/:id - Xóa task
+  GET /api/categories - Lấy danh sách categories
+  POST /api/categories - Tạo category mới
+  ```
+
+### 4.3 Database
+- **Option 1: MongoDB**
+  - Collections: tasks, categories
+  - Indexes trên commonly queried fields
+  
+- **Option 2: PostgreSQL**
+  - Normalized tables
+  - Foreign key constraints
+  - Indexes và query optimization
+
+## 5. Non-Functional Requirements
+
+### 5.1 Performance
+- Page load time < 3 seconds
+- API response time < 500ms
+- Smooth animations (60fps)
+- Offline functionality với service workers
+
+### 5.2 Security
+- Input sanitization và validation
+- XSS protection
+- CORS configuration
+- Rate limiting cho API calls
+
+### 5.3 Browser Support
+- Chrome 90+
+- Firefox 90+
+- Safari 14+
+- Edge 90+
+
+### 5.4 Accessibility (A11y)
+- WCAG 2.1 AA compliance
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Alt text cho images
+- Appropriate ARIA labels
+
+## 6. Nice-to-Have Features
+
+### 6.1 Advanced Features
+- **Notifications**:
+  - Browser notifications cho deadlines
+  - Email reminders
+  
+- **Collaboration**:
+  - Share tasks với others
+  - Comments trên tasks
+  
+- **Analytics**:
+  - Productivity statistics
+  - Task completion trends
+  - Time tracking
+
+- **Import/Export**:
+  - CSV export
+  - Import from other todo apps
+  - Backup/restore functionality
+
+### 6.2 Integration
+- Calendar integration (Google Calendar)
+- Email integration
+- Mobile app (React Native)
+
+## 7. Development Setup Requirements
+
+### 7.1 Environment Setup
+- Node.js 18+ và npm/yarn
+- Database (MongoDB local hoặc PostgreSQL)
+- Environment variables (.env file)
+- ESLint và Prettier configuration
+- Git hooks với Husky
+
+### 7.2 Project Structure
+```
+todo-app/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   ├── styles/
+│   │   └── App.js
+│   ├── public/
+│   └── package.json
+├── server/                 # Node.js backend  
+│   ├── routes/
+│   ├── models/
+│   ├── middleware/
+│   ├── controllers/
+│   ├── config/
+│   └── server.js
+├── shared/                 # Shared utilities
+└── README.md
+```
+
+### 7.3 Scripts & Commands
+- `npm run dev` - Start development servers
+- `npm run build` - Build production
+- `npm run test` - Run tests
+- `npm run lint` - Code linting
+- `npm run deploy` - Deploy to production
+
+## 8. Testing Requirements
+- Unit tests cho components (Jest + React Testing Library)
+- Integration tests cho API endpoints
+- E2E tests (Cypress hoặc Playwright)
+- Performance testing
+- Accessibility testing
+
+## 9. Deployment Requirements
+- Frontend: Vercel, Netlify hoặc AWS S3
+- Backend: Heroku, Railway hoặc AWS EC2
+- Database: MongoDB Atlas hoặc AWS RDS
+- Environment variables setup
+- CI/CD pipeline với GitHub Actions
+
+## 10. Documentation Requirements
+- README.md với setup instructions
+- API documentation (Swagger/OpenAPI)
+- Component documentation (Storybook)
+- User guide/help section
+- Code comments và JSDoc

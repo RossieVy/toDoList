@@ -1,0 +1,23 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "TodoList Web Application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "task-master list",
+    "task:list": "task-master list",
+    "task:expand": "task-master expand",
+    "task:generate": "task-master generate",
+    "task:parse-prd": "task-master parse-prd --input=scripts/plan.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todolist",
+    "task-master"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "task-master-ai": "latest"
+  }
+}
